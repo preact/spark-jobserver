@@ -14,19 +14,29 @@ object Dependencies {
 
   lazy val yodaDeps = Seq(
     "org.joda" % "joda-convert" % "1.2",
-    "joda-time" % "joda-time" % "2.2"
+    "joda-time" % "joda-time" % "2.2",
+    "org.json4s" %% "json4s-ext" % "3.2.10"
+  )
+
+  lazy val camelDeps = Seq(
+    "org.apache.camel" % "camel-aws" % "2.13.2"
+  )
+
+  lazy val awsDeps = Seq(
+    "com.amazonaws" % "aws-java-sdk" % "1.8.9.1"
   )
 
   lazy val akkaDeps = Seq(
     // Akka is provided because Spark already includes it, and Spark's version is shaded so it's not safe
     // to use this one
     "com.typesafe.akka" %% "akka-slf4j" % "2.3.4" % "provided",
+    "com.typesafe.akka" %% "akka-camel" % "2.3.4",
     "io.spray" %% "spray-json" % "1.3.2",
     "io.spray" %% "spray-can" % "1.3.3",
     "io.spray" %% "spray-routing" % "1.3.3",
     "io.spray" %% "spray-client" % "1.3.3",
     yammerDeps
-  ) ++ yodaDeps
+  ) ++ yodaDeps ++ camelDeps ++ awsDeps
 
   val mesosVersion = sys.env.getOrElse("MESOS_VERSION", "0.25.0-0.2.70.ubuntu1404")
 
@@ -62,7 +72,7 @@ object Dependencies {
   lazy val coreTestDeps = Seq(
     "org.scalatest" %% "scalatest" % "2.2.1" % "test",
     "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test",
-    "io.spray" %% "spray-testkit" % "1.3.2" % "test"
+    "io.spray" %% "spray-testkit" % "1.3.3" % "test"
   )
 
   lazy val securityDeps = Seq(
