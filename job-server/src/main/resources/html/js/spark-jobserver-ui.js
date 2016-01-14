@@ -10,11 +10,16 @@ function getJobs() {
       $.each(jobs, function(key, job) {
         var items = [];
         items.push("<tr>");
-        items.push("<td>" + job.jobId + "</td>");
+        items.push("<td><a href='./jobs/" + job.jobId + "'>" + job.jobId + "</a> (<a href='./jobs/" + job.jobId + "/config'>C</a>)</td>");
         items.push("<td>" + job.classPath + "</td>");
         items.push("<td>" + job.context + "</td>");
         items.push("<td>" + job.startTime + "</td>");
-        items.push("<td>" + job.duration + "</td>");
+        if(job.status == 'RUNNING') {
+          var startTime = new Date(job.startTime);
+          items.push("<td>" + (Date.now() - startTime) / 1000 + " secs</td>");
+        } else {
+          items.push("<td>" + job.duration + "</td>");
+        }
         items.push("</tr>");
 
         if(job.status == 'ERROR') {
